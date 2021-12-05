@@ -28,7 +28,9 @@ def upgrade():
         sa.Column('nick_name', sa.String(length=50), nullable=True),
         sa.Column('short_message', sa.String(length=100), nullable=True),
         sa.Column('long_message', sa.Text(), nullable=True),
-        sa.Column('obit_image',sa.String(), nullable=False),
+        sa.Column('obit_image', sa.String(), nullable=False),
+        sa.Column('birth_date', sa.Date(), nullable=False),
+        sa.Column('death_date', sa.Date(), nullable=False),
 
         #Obituary generated Data
         sa.Column('end_date', sa.DateTime(), nullable=False),

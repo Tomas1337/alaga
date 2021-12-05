@@ -11,6 +11,8 @@ class Obit(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     middle_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
+    birth_date = db.Column(db.Date, nullable=False)
+    death_date = db.Column(db.Date, nullable=False)
     nick_name = db.Column(db.String(50), nullable=False)
     short_message = db.Column(db.String(100), nullable=True)
     long_message = db.Column(db.Text, nullable=True)
