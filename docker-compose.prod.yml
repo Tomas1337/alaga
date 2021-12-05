@@ -33,19 +33,19 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  db:
-    image: postgres:12
-    env_file: .env
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./init-pg.sh:/docker-entrypoint-initdb.d/init-pg.sh
-    networks:
-      - alaga-network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    depends_on:
-      - backend
+  # db:
+  #   image: postgres:12
+  #   env_file: .env
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - ./init-pg.sh:/docker-entrypoint-initdb.d/init-pg.sh
+  #   networks:
+  #     - alaga-network
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   depends_on:
+  #     - backend
 
 networks:
   alaga-network:
