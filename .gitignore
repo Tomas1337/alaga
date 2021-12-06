@@ -4,3 +4,4 @@ __pycache__/
 .venv
 .vscode
 node_modules
+app/seeds/seed_list.csv

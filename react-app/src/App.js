@@ -117,7 +117,7 @@
               </Route>
             </Switch>
           </BrowserRouter>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     );
