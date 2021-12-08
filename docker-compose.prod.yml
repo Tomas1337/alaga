@@ -11,6 +11,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+      #cannot load certificate "/etc/letsencrypt/live/alaga.tech/fullchain.pem": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/etc/letsencrypt/live/alaga.tech/fullchain.pem','r') error:2006D080:BIO routines:BIO_new_file:no such file)
     volumes:
       - ./react-app:/react-app
       - /react-app/node_modules
@@ -23,6 +25,7 @@ services:
   
   certbot:
     image: certbot/certbot
+    container_name: certbot
     volumes: 
       - ./react-app/certbot/conf:/etc/letsencrypt
       - ./react-app/certbot/www:/var/www/certbot
