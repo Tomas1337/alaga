@@ -5,7 +5,7 @@
 #   exit 1
 # fi
 
-domains=(alaga.tech www.alaga.tech)
+domains=(dev.alaga.tech)
 rsa_key_size=4096
 data_path="./react-app/certbot"
 email="alaga.technology@gmail.com" # Adding a valid address is strongly recommended

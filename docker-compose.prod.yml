@@ -12,8 +12,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-
-      #cannot load certificate "/etc/letsencrypt/live/alaga.tech/fullchain.pem": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/etc/letsencrypt/live/alaga.tech/fullchain.pem','r') error:2006D080:BIO routines:BIO_new_file:no such file)
     volumes:
       - ./react-app:/react-app
       - /react-app/node_modules
@@ -32,7 +30,6 @@ services:
       - ./react-app/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
-
   backend:
     build: 
       context: ./app
@@ -49,21 +46,7 @@ services:
     command: gunicorn app:app -c ./app/gunicorn.conf.py
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-  # db:
-  #   image: postgres:12
-  #   env_file: .env
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - ./init-pg.sh:/docker-entrypoint-initdb.d/init-pg.sh
-  #   networks:
-  #     - alaga-network
-  #   extra_hosts:
-  #     - "host.docker.internal:host-gateway"
-  #   depends_on:
-  #     - backend
-
+      
 networks:
   alaga-network:
     name: alaga-network
