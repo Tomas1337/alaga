@@ -10,12 +10,22 @@ services:
       - alaga-network
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./react-app:/react-app
       - /react-app/node_modules
+      - ./react-app/certbot/conf:/etc/letsencrypt
+      - ./react-app/certbot/www:/var/www/certbot
     stdin_open: true
     depends_on:
       - backend
+  
+  certbot:
+    image: certbot/certbot
+    volumes: 
+      - ./react-app/certbot/conf:/etc/letsencrypt
+      - ./react-app/certbot/www:/var/www/certbot
+
 
   backend:
     build: 
