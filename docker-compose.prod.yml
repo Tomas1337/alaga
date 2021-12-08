@@ -19,12 +19,14 @@ services:
     stdin_open: true
     depends_on:
       - backend
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   
   certbot:
     image: certbot/certbot
     volumes: 
       - ./react-app/certbot/conf:/etc/letsencrypt
       - ./react-app/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 
   backend:
