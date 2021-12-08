@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile.prod
     env_file: ./react-app/.env
     hostname: frontend
+    container_name: frontend
     networks:
       - alaga-network
     ports:
@@ -36,6 +37,7 @@ services:
     build: 
       context: ./app
       dockerfile: Dockerfile.prod
+    container_name: backend
     env_file: .env
     hostname: backend
     networks:
