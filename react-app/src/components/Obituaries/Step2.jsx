@@ -54,10 +54,10 @@ const Step2 = props => {
           type="textarea"
           name="long_message"
           id="long_message"
-          placeholder="Place a long message here (max 300 characters)"
+          placeholder="Place a long message here (max 1,000 characters)"
           value={props.long_message} // Prop: The long_message input data
           onChange={props.handleChange} // Prop: Puts data into the state
-          maxLength={300}
+          maxLength={1000}
         />
         </div>
         
