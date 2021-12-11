@@ -1,16 +1,16 @@
 from flask import Blueprint, jsonify, redirect, request
 from datetime import datetime, timedelta
-from app.models import db, Obit, User
+from app.models import db, Obit, User, Comment
 from app.forms.obit_form import ObitForm
+from app.forms.comment_form import CommentForm
 from flask_login import current_user
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func, or_
 from itertools import chain
 from werkzeug.utils import secure_filename
-import os
+import json
 
 obit_routes = Blueprint('obits', __name__)
-
 
 @obit_routes.route('/')
 def getAllObits():
@@ -18,13 +18,29 @@ def getAllObits():
     data = [obit.to_dict() for obit in result]
     return {"obits": data}
 
+@obit_routes.route('/<id>/comments', methods=["POST"])
+def addComment(id):
+    form = CommentForm()
+    #form['csrf_token'].data = request.form['csrf_token']
+    print('here at addComment')
+    if form.validate_on_submit():
+        comment = Comment(
+            author=form.data['author'],
+            comment=form.data['comment'],
+            obit_id=form.data['obit_id']
+        )
+    db.session.add(comment)
+    db.session.commit()
+    return comment.to_dict()
+
+
 
 @obit_routes.route('/', methods=["POST"])
 def newObit():
     form = ObitForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        print("Validating Form")
+        #print("Validating Form")
         obit = Obit(
             user_id=current_user.get_id(),
             first_name=form.data['firstName'],
@@ -57,14 +73,36 @@ def newObit():
     return jsonify(form.errors)
 
 # GET route for a specific obit id
-
-
 @obit_routes.route('/<id>')
 def getSpecificObit(id):
     result = Obit.query.get(id)
     if result is None:
         return {"error": "Not found"}
     return result.to_dict()
+
+# GET route for comments on a specific obit id
+@obit_routes.route('/<id>/comments')
+def getComments(id):
+    # Get all comments for a specific obit
+    result = Comment.query.filter_by(obit_id=id).with_entities(Comment.id, Comment.author, Comment.comment).all()
+    #pdb.set_trace()
+    keys = result[0].keys()
+    
+    numfields = len(keys)
+    data = []
+
+    # Combine the keys tuple and the data tuple to output a json dictionary
+    for row in result:
+        dictrow = {}
+        for idx, key in enumerate(keys):
+            dictrow[key] = row[idx]
+        data.append(dictrow)
+    if result is None:
+        return {"error": "Not found"}
+
+    return json.dumps(data, indent=4, sort_keys=True, default=str)
+
+
 
 
 # GET route for obits started by user
@@ -125,8 +163,6 @@ def deleteObit(id):
         return {"id deleted": id}
     else:
         return {"error": f'id {id} not found'}
-
-
 
 @obit_routes.route('/search/<query>')
 def searchForObits(query):

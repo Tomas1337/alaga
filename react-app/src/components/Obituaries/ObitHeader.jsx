@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
 const ObitHeader = (props) => { 
-
-    // const [name, setName] = useState({});
-    // const [nickname, setNickname] = useState({});
-    // const [shortMessage, setShortMessage] = useState({})
-
     return (
         <div className="obit-profile-header__wrapper">
         <h2 className="obit-profile-header__headText">

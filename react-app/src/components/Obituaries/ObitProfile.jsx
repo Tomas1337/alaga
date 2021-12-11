@@ -4,6 +4,8 @@ import LoadingAnimation from "../LoadingAnimation.js";
 import { dateDiffInDays, getDonationCount, fillBar } from "../../services/utils";
 import default_img from '../../assets/images/default_img620by350.png';
 import ObitHeader from "./ObitHeader.jsx";
+import CommentBar from "../Comment/CommentBar.jsx";
+import CommentWall from "../Comment/CommentWall.jsx";
 
 const ObitProfile = (props) => {
   const [obit, setObit] = useState({});
@@ -14,12 +16,13 @@ const ObitProfile = (props) => {
   const [donation, setDonation] = useState(false);
   const [userDonationAmount, setUserDonationAmount] = useState(0);
   const [donationCount, setDonationCount] = useState(null);
+  const [commentValue, setCommentValue] = useState("");
+  const [commentLine, setCommentLine] = useState({ commentId:"", text: "", })
 
   const history = useHistory();
   const spinnerRef = useRef();
   const { id } = useParams();
   const userId = props.user.id;
-  // const creatorName = creator.firstname + " " + creator.lastname;
 
   //check if obit belongs to user
   useEffect(() => {
@@ -124,6 +127,25 @@ const ObitProfile = (props) => {
     setAmountError("");
   };
 
+
+  const submitCommentLine = async (author, comment) => {
+    // Make a post request with the comment
+    // fetch('/api/comments', {
+    console.log('submitting comment placeholder with', author, comment)
+    const response = await fetch(`/api/obits/${id}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        author,
+        comment,
+        obit_id: id
+      }),
+    });
+  };
+
+
   const remainingDays = () => {
     const days = dateDiffInDays(obit.end_date);
     const fundingResult = obit.balance >= obit.funding_goal;
@@ -213,11 +235,11 @@ const ObitProfile = (props) => {
             </div>
             <div className="obit-profile-page__info-container">
               <div>
-                <div>
+                {/* <div>
                   <button className="obit-profile-page__guestbook-button">
                       SIGN THE GUEST BOOK
                   </button>
-                </div>
+                </div> */}
                 <div>
                   <button className="obit-profile-page__novena-button">
                       JOIN THE ONLINE NOVENA
@@ -304,6 +326,15 @@ const ObitProfile = (props) => {
                   </button>
                 </div>
               )}
+              <div>
+                <h3 className = 'comments-guestbook-header'> Guest book </h3>
+                <CommentWall 
+                  obit_id={id} 
+                  />
+                <CommentBar
+                  submitComment = { submitCommentLine }
+                />
+              </div>  
             </div>
             <div className="obit-profile-long_message-container">
               <div className="obit-profile-long_message-wrapper"> 

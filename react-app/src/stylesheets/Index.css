@@ -22,7 +22,7 @@
 @import "ObitCard.css";
 @import "TrendingObitsPreview.css";
 @import "RecentObitsPreview.css";
-
+@import "Comment.css";
 
 html {
   font-family: "Maison Neue Book", "Helvetica Neue", Helvetica, Arial,

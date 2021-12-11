@@ -4,6 +4,7 @@ from .projects import seed_projects, undo_projects
 from .pledges import seed_pledges, undo_pledges
 from .obits import seed_obits, undo_obits
 from .donations import seed_donations, undo_donations
+from .comments import seed_comments, undo_comments
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -42,3 +43,7 @@ def undo():
 def undo_o():
     pass
     undo_obits()
+
+@seed_commands.command('comments')
+def seed_c():
+    seed_comments()

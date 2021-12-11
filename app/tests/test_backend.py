@@ -161,3 +161,24 @@ def test_NewestObit():
     response = requests.get('http://localhost:3000/api/obits/newest')
     assert type(response.json()['newest_obits'][0]['user_id']) == int
     #assert type(response.json()['random_obit'][0]['user_id']) != 0
+
+def test_GetComments():
+    id = 99
+    response = requests.get(f'http://localhost:3000/api/obits/{str(id)}/comments')
+    assert type(response.json()[0]['id']) == int
+
+def test_GetDonations():
+    id = 80
+    response = requests.get(f'http://localhost:3000/api/obits/{str(id)}/donations')
+    assert type(response.json()['donations'][0]['id']) == int
+
+def test_PostComments():
+    id = 99
+    payload = {
+            'author': 'test author',
+            'obit_id': f'{str(id)}',
+            'comment': 'Sample Comment'
+            }
+
+    response = requests.post(f'http://localhost:3000/api/obits/{str(id)}/comments', json=payload)
+    assert response.status_code == 200

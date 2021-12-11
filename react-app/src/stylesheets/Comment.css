@@ -1,0 +1,50 @@
+.comments-wall_container {
+  width: 10rem;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration-color: black;
+}
+
+.comments-guestbook-header {
+  display: grid;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-style: solid;
+  border-top-color: #4D2270;
+  border-top-width: 0.05rem;
+  border-bottom-width: 0.05rem;
+  border-bottom-color: #4D2270;
+  color: #4D2270;
+  font-size: 20px;
+  font-family: "Cormorant Garamond Semi-bold 600";
+  margin-bottom: 1.5rem;
+}
+
+.comments-wall {
+  columns: 1;
+  -webkit-columns: 1;
+  list-style-type: circle;
+  border-radius: 1px;
+  /* border-style: solid;
+  border-width: 1px;
+  border-color: #ebe8e8; */
+  border-bottom: 1px solid #964cd381;
+
+}
+
+.comments-author {
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Cormorant Garamond Semi-bold 600";
+}
+
+.comments-comment {
+  font-size: 12px;
+  font-family: "Cormorant Garamond Semi-bold 600";
+  padding-left: 10px;
+  color: black;
+  list-style-type: None;
+}

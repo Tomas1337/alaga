@@ -81,7 +81,6 @@ class NewObit extends Component {
     const { firstName, middleName, lastName, nickName,
       funding_goal, death_date, birth_date, short_message, 
       long_message, obit_image} = this.state;
-    console.log('mother fucker', this.state)
     // alert(`Your registration detail: \n 
     //   First Name: ${firstName} \n 
     //   Middle Name: ${middleName} \n

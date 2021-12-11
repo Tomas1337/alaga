@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  getPledgeCount,
+  getDonationCount,
   getCreatorName,
   dateDiffInDays,
   fillBar,
@@ -102,8 +102,8 @@ const ObitCard = (data) => {
     (async () => {
       try {
         if(mounted && obit.id) {
-        const pledgeNum = await getPledgeCount(obit.id);
-          setPledgeCount(pledgeNum);
+        const pledgeNum = await getDonationCount(obit.id);
+        getDonationCount(pledgeNum);
         }
       } catch(e) {
         console.error(e);
