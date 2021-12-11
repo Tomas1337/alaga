@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, redirect, request
 from datetime import datetime, timedelta
-from app.models import db, Project, Pledge, User, Donation
-from app.forms.project_form import ProjectForm
+from app.models import db, Obit, Pledge, User, Donation
 from app.forms.obit_form import ObitForm
 from sqlalchemy.orm import joinedload
 
@@ -9,8 +8,8 @@ donation_routes = Blueprint('donations', __name__)
 
 #Get all donations for a specific project
 @donation_routes.route('/obits/<id>/donations')
-def getAllProjectDonations(id):
-    obit = Project.query.get(id)
+def getAllObitDonations(id):
+    obit = Obit.query.get(id)
     if obit:
         result = Donation.query.filter_by(obit_id=obit.id).all()
         data = [donation.to_dict() for donation in result]
@@ -39,7 +38,7 @@ def newDonation(id):
     if error:
         return {"error": error}, 400
 
-    obit = Project.query.get(id)
+    obit = Obit.query.get(id)
     if obit:
         obit.balance = float(obit.balance) + amount
         donation = Donation()
@@ -56,12 +55,12 @@ def newDonation(id):
 # Edit an existing donation to a specific obit
 
 
-@ donation_routes.route('/obits/<id>/donations', methods=["PUT"])
+@donation_routes.route('/obits/<id>/donations', methods=["PUT"])
 def editDonation(id):
     data = request.get_json()
     user_id = data["userId"]
     amount = float(data["amount"])
-    obit = Project.query.get(id)
+    obit = Obit.query.get(id)
     if obit:
         donation = Donation.query.filter_by(obit_id=id, user_id=user_id).first()
         donation_difference = amount - float(donation.amount)
@@ -72,11 +71,11 @@ def editDonation(id):
         db.session.commit()
         return {"donation": donation.to_dict(), "obit": obit.to_dict()}
     else:
-        return {"error": f'Project id {id} not found'}, 404
+        return {"error": f'Obit id {id} not found'}, 404
 
 
 # Get all donations for a specific USER
-@ donation_routes.route('/users/<id>/donations')
+@donation_routes.route('/users/<id>/donations')
 def getAllUserDonations(id):
     user = User.query.get(id)
     # queries for donations attached to user, including obit data

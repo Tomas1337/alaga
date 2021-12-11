@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     env_file: ./react-app/.env
     environment:
-      - name=value
+      CHOKIDAR_USEPOLLING: "true"
     hostname: frontend
     networks:
       - alaga-network
@@ -22,21 +22,20 @@ services:
       context: ./app
       dockerfile: Dockerfile
     environment:
-      - name=value
+      CHOKIDAR_USEPOLLING: "true"
     env_file: .env
     hostname: backend
     networks:
       - alaga-network
     ports:
       - "5000:5000"
+      - "5432:5432"
     volumes:
       - ./app:/app
       - ./migrations:/migrations
     command: gunicorn app:app -c ./app/gunicorn.conf.py
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    depends_on:
-      - db
 networks:
   alaga-network:
     name: alaga-network
